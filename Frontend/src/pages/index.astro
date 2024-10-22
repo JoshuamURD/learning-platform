@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const response = await fetch('http://localhost:1337/api/courses');
+const { data: courses } = await response.json();
+---
+
+<Layout title="Taught Knowledge">
+  <main class="flex flex-col items-center justify-center min-h-screen bg-black text-green-400 font-mono p-4">
+    <h1 class="text-4xl font-bold mb-8 glitch" data-text="Taught Knowledge">Taught Knowledge</h1>
+    <p class="text-lg mb-8">Hack your learning journey</p>
+    <div class="space-y-4 w-full max-w-2xl">
+      {courses.map((course) => (
+        <a href={`/courses/${course.slug}`} class="block p-4 border border-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">
+          <h2 class="text-xl font-bold">{course.Title}</h2>
+          <p class="text-sm">{course.Author ? `By ${course.Author}` : 'Anonymous'}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .glitch {
+    position: relative;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim 3s infinite linear alternate-reverse;
+  }
+  .glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2s infinite linear alternate-reverse;
+  }
+  @keyframes glitch-anim {
+    0% { clip: rect(51px, 9999px, 83px, 0); }
+    5% { clip: rect(76px, 9999px, 9px, 0); }
+    10% { clip: rect(47px, 9999px, 26px, 0); }
+    15% { clip: rect(8px, 9999px, 40px, 0); }
+    20% { clip: rect(30px, 9999px, 61px, 0); }
+    25% { clip: rect(62px, 9999px, 73px, 0); }
+    30% { clip: rect(89px, 9999px, 95px, 0); }
+    35% { clip: rect(15px, 9999px, 37px, 0); }
+    40% { clip: rect(72px, 9999px, 18px, 0); }
+    45% { clip: rect(94px, 9999px, 2px, 0); }
+    50% { clip: rect(33px, 9999px, 58px, 0); }
+    55% { clip: rect(6px, 9999px, 84px, 0); }
+    60% { clip: rect(50px, 9999px, 70px, 0); }
+    65% { clip: rect(23px, 9999px, 45px, 0); }
+    70% { clip: rect(66px, 9999px, 31px, 0); }
+    75% { clip: rect(11px, 9999px, 92px, 0); }
+    80% { clip: rect(38px, 9999px, 54px, 0); }
+    85% { clip: rect(82px, 9999px, 16px, 0); }
+    90% { clip: rect(19px, 9999px, 78px, 0); }
+    95% { clip: rect(57px, 9999px, 4px, 0); }
+    100% { clip: rect(8px, 9999px, 40px, 0); }
+  }
+</style>
